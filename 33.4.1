@@ -1,0 +1,18 @@
+import RoboPiLib as RPL
+import setup
+import time
+sensor = [17]
+speed = [1590, 1500]
+x = 1
+
+def pulse():
+  for went in range(3):
+    for go in speed:
+      RPL.servoWrite(0,go)
+      time.sleep(0.5)
+
+while x == 1:
+  time.sleep(0.05)
+  for fire in sensor:
+    if RPL.digitalRead(fire) == 0:
+      pulse()

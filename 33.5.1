@@ -1,0 +1,67 @@
+import RoboPiLib as RPL
+import setup
+import time
+import math
+analog_pin = 7
+reading = 0
+speed = 0
+debug = False
+pause = 0.05
+L = 0
+R = 1
+if debug == True:
+  print('start')
+  print('analog pin =', analog_pin)
+
+def go():
+  global reading
+  lspeed = -0.23 * reading + 1617
+  rspeed = 0.23 * reading + 1383
+  RPL.servoWrite(L,int(lspeed))
+  RPL.servoWrite(R,int(rspeed))
+  if debug == True:
+    print('left wheel speed =', lspeed)
+    print('right wheel speed = ', rspeed)
+    time.sleep(1)
+  read()
+
+def back():
+  RPL.servoWrite(L,1500)
+  RPL.servoWrite(R,1500)
+  time.sleep(1)
+  RPL.servoWrite(L,1410)
+  RPL.servoWrite(R,1590)
+  time.sleep(1)
+  RPL.servoWrite(L,1510)
+  time.sleep(1)
+  RPL.servoWrite(L,1500)
+  time.sleep(1)
+  if debug == True:
+    print('stopping')
+    time.sleep(1)
+    #exit()
+  read()
+
+def override():
+  RPL.servoWrite(L,1590)
+  RPL.servoWrite(R,1410)
+  if debug == True:
+    print('Over riding')
+  read()
+
+def read():
+  global reading
+  time.sleep(pause)
+  reading = RPL.analogRead(analog_pin)
+  if debug:
+    print('reading =', reading)
+  if reading < 100:
+    override() 
+  elif reading >= 100 and reading <= 500:
+    go()
+  else:
+    back()
+  read()
+
+read()
+

@@ -1,0 +1,8 @@
+import time
+fire_count = 0
+pin = [16,17,18,0]
+motors = [0,1]
+
+def exdsfc():
+  print('WORK')
+exdsfc()
