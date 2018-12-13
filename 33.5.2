@@ -2,9 +2,9 @@ import RoboPiLib as RPL
 import setup
 import time
 fire_count = 0
-analog_pin = [7]
+pin = [7]
 motors = [0,1]
-for number in analog_pin:
+for number in pin:
   RPL.pinMode(number,RPL.INPUT)
 
 def execut():
@@ -19,7 +19,7 @@ def execut():
 
 while True:
   time.sleep(0.05)
-  for x in analog_pin:
+  for x in pin:
     if RPL.digitalRead(x) == 0:
       execut()
 
